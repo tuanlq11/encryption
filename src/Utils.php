@@ -103,11 +103,15 @@ class Utils
      * @param $data
      * @return String
      */
-    public function encrypt($data)
+    public function encrypt($data, $base64 = true)
     {
         if (empty($this->pubKey))
             return false;
         openssl_public_encrypt($data, $encrypted, $this->pubKey);
+
+        if ($base64) {
+            $encrypted = base64_encode($encrypted);
+        }
 
         return $encrypted;
     }
@@ -118,12 +122,16 @@ class Utils
      * @param $data
      * @return bool
      */
-    public function decrypt($data)
+    public function decrypt($data, $base64 = true)
     {
         if (empty($this->privKey))
             return false;
 
         openssl_private_decrypt($data, $decrypted, $this->privKey);
+
+        if ($base64) {
+            $decrypted = base64_decode($decrypted);
+        }
 
         return $decrypted;
     }
