@@ -86,11 +86,16 @@ class Utils
      */
     public function generatePKey($digest_alg = "sha512", $private_key_bits = 4096, $private_key_type = OPENSSL_KEYTYPE_RSA)
     {
-        $res = openssl_pkey_new([
-            "digest_alg"       => $digest_alg,
+        $params = [
             "private_key_bits" => $private_key_bits,
             "private_key_type" => $private_key_type,
-        ]);
+        ];
+
+        if (!is_null($digest_alg)) {
+            $params["digest_alg"] = $digest_alg;
+        }
+
+        $res = openssl_pkey_new($params);
 
         openssl_pkey_export($res, $this->privKey);
         $pubKey = openssl_pkey_get_details($res);
