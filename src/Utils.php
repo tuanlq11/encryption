@@ -103,7 +103,7 @@ class Utils
      * @param $data
      * @return String
      */
-    public function encrypt($data, $base64 = true)
+    public function encrypt($data, $base64 = false)
     {
         if (empty($this->pubKey))
             return false;
@@ -122,7 +122,7 @@ class Utils
      * @param $data
      * @return bool
      */
-    public function decrypt($data, $base64 = true)
+    public function decrypt($data, $base64 = false)
     {
         if (empty($this->privKey))
             return false;
